@@ -1,0 +1,9 @@
+---
+galaxy_info:
+  author: Patrick Becker <galaxy@thinkbox.center>
+  description: Installs and configures zsh for one or more users on Linux.
+  license: MIT
+
+  min_ansible_version: "2.13"
+
+dependencies: []

@@ -1,0 +1,41 @@
+---
+dependency:
+  name: galaxy
+  requirements-file: ../requirements.yml
+driver:
+  name: docker
+# lint: |
+#   set -e
+#   yamllint .
+#   ansible-lint
+scenario:
+  name: local
+  test_sequence:
+    - lint
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy
+platforms:
+  - name: ubuntu-2204
+    image: geerlingguy/docker-ubuntu2204-ansible
+  - name: ubuntu-2004
+    image: geerlingguy/docker-ubuntu2004-ansible
+  - name: debian-11
+    image: geerlingguy/docker-debian11-ansible
+  - name: debian-10
+    image: geerlingguy/docker-debian10-ansible
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        ansible_user: root
+  playbooks:
+    converge: ../default/converge.yml
+    verify: ../default/verify.yml
+verifier:
+  name: ansible

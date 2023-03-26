@@ -1,0 +1,53 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Get user shell
+      ansible.builtin.user:
+        name: root
+      register: user_info
+
+    - name: Get zsh installed path
+      ansible.builtin.command: /usr/bin/which zsh
+      register: zsh_installed_path
+      changed_when: false
+
+    - name: Filepath assertion
+      ansible.builtin.assert:
+        that:
+          - zsh_installed_path.stdout == "/usr/bin/zsh"
+        fail_msg: Unexpected path to the shell returned.
+
+    - name: Shell assertion
+      ansible.builtin.assert:
+        that:
+          - user_info.shell is defined
+          - user_info.shell == zsh_installed_path.stdout
+        fail_msg: Failed to set zsh as default shell for a user.
+
+    - name: Check file paths
+      ansible.builtin.include_tasks: verify_checksum.yml
+      loop:
+        - filename: /root/.zshrc  # Checks the resolution of $HOME too.
+          checksum: 1920cfdbd67240c69a78172d912e41e47421b303
+        - filename: /root/.zshenv
+          checksum: 4045278b9b11717f4f4094e56d9be87ff05a5965
+        - filename: /root/.zprofile
+          checksum: 745ca5bd183374455bad022dc3390e62d3dbcd68
+        - filename: /root/.zlogin
+          checksum: 56d13addb0ffd9962bc44393680b0a19b14a5839
+        - filename: /root/.zlogout
+          checksum: 8fa1cd1a2fff12f861469b242d2ee897d475b27f
+        - filename: /etc/zshrc
+          checksum: 1920cfdbd67240c69a78172d912e41e47421b303
+        - filename: /etc/zshenv
+          checksum: 4045278b9b11717f4f4094e56d9be87ff05a5965
+        - filename: /etc/zprofile
+          checksum: 745ca5bd183374455bad022dc3390e62d3dbcd68
+        - filename: /etc/zlogin
+          checksum: 56d13addb0ffd9962bc44393680b0a19b14a5839
+        - filename: /etc/zlogout
+          checksum: 8fa1cd1a2fff12f861469b242d2ee897d475b27f
+      loop_control:
+        loop_var: file_to_check

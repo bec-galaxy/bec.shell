@@ -1,0 +1,24 @@
+---
+- name: Ensure zsh is the default shell
+  ansible.builtin.user:
+    name: "{{ zsh_user }}"
+    shell: "{{ zsh_executable }}"
+  become: true
+  tags:
+    - zsh
+    - shell
+
+- name: Create zsh user files
+  ansible.builtin.template:
+    src: "{{ item.template }}"
+    dest: "{{ item.filepath }}"
+    owner: "{{ zsh_user }}"
+    mode: "{{ zsh_config_mode }}"
+    backup: "{{ zsh_config_backup }}"
+    force: "{{ zsh_config_overwrite }}"
+  become: true
+  become_user: "{{ zsh_user }}"
+  loop: "{{ zsh_users_config }}"
+  tags:
+    - zsh
+    - config

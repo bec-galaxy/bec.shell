@@ -1,0 +1,19 @@
+---
+#
+# Extra file for the molecule verify step.
+#
+- name: Get stats of a zsh file
+  ansible.builtin.stat:
+    path: "{{ file_to_check.filename }}"
+    checksum_algorithm: sha1
+  register: file_info
+
+- name: File assertion
+  ansible.builtin.assert:
+    that:
+      - file_info is defined
+      - file_info.stat is defined
+      - file_info.stat.exists == true
+      - file_info.stat.checksum == "{{ file_to_check.checksum }}"
+    fail_msg: "File '{{ file_to_check.filename }}' could not be verified."
+    success_msg: "File '{{ file_to_check.filename }}' has passed."

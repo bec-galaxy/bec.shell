@@ -1,0 +1,35 @@
+namespace: bec
+name: shell
+
+version: 1.0.0
+readme: README.md
+authors:
+  - Patrick Becker <galaxy@thinkbox.center>
+
+description: A simple collection to install and set up a shell on Linux.
+
+license:
+  - MIT
+
+tags:
+  - zsh
+  - zshell
+  - shell
+  - terminal
+  - console
+  - zshrc
+  - zshenv
+  - zprofile
+  - zlogin
+  - zlogout
+
+dependencies: {}
+
+repository: https://github.com/bec-galaxy/ansible-collection-shell
+documentation: https://github.com/bec-galaxy/ansible-collection-shell
+homepage: https://github.com/bec-galaxy
+issues: https://github.com/bec-galaxy/ansible-collection-shell/issues
+
+build_ignore:
+  - "molecule"
+  - "*.tar.gz"

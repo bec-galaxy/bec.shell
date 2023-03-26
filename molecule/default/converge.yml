@@ -1,0 +1,38 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    zsh_config_backup: false
+    zsh_config_overwrite: true
+
+    zsh_users_config:
+      - template: "zshrc.j2"
+        filepath: "$HOME/.zshrc"
+      - template: "zshenv.j2"
+        filepath: "$HOME/.zshenv"
+      - template: "zprofile.j2"
+        filepath: "$HOME/.zprofile"
+      - template: "zlogin.j2"
+        filepath: "$HOME/.zlogin"
+      - template: "zlogout.j2"
+        filepath: "$HOME/.zlogout"
+
+    zsh_system_config:
+      - template: "zshrc.j2"
+        filepath: "/etc/zshrc"
+      - template: "zshenv.j2"
+        filepath: "/etc/zshenv"
+      - template: "zprofile.j2"
+        filepath: "/etc/zprofile"
+      - template: "zlogin.j2"
+        filepath: "/etc/zlogin"
+      - template: "zlogout.j2"
+        filepath: "/etc/zlogout"
+
+    zsh_dependencies:
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+  tasks:
+    - name: "Include role"
+      ansible.builtin.include_role:
+        name: "bec.shell.zsh"
