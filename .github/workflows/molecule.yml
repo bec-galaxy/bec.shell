@@ -37,8 +37,8 @@ jobs:
           ANSIBLE_FORCE_COLOR: "1"
           MOLECULE_DISTRO: ${{ matrix.scenario.image }}
 
-  completion:
-    name: Completion
+  output:
+    name: Print output
     runs-on: ubuntu-latest
     needs: molecule
     steps:
