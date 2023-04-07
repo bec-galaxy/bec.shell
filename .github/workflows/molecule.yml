@@ -1,7 +1,7 @@
 ---
 name: Molecule
 
-on:
+"on":
   pull_request:
 
 jobs:
@@ -37,6 +37,9 @@ jobs:
           ANSIBLE_FORCE_COLOR: "1"
           MOLECULE_DISTRO: ${{ matrix.scenario.image }}
 
+  #
+  # Only allow merge requests to be merged if the pipeline succeeds.
+  #
   output:
     name: Print output
     runs-on: ubuntu-latest
