@@ -346,10 +346,6 @@ A preview of this configuration:
 ![zsh console](https://raw.githubusercontent.com/patbec/zsh-console-icons/master/zsh-console.svg)
 <sub>You can find the used [ANSI console colors here](https://github.com/patbec/zsh-console-icons#colors).</sub>
 
-## Licence
-
-This project is licensed under MIT - See the [LICENSE](LICENSE) file for more information.
-
 ---
 
 &uarr; [Back to top](#)

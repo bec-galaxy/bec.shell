@@ -1,7 +1,8 @@
+---
 namespace: bec
 name: shell
 
-version: 1.0.1
+version: 1.0.2
 readme: README.md
 authors:
   - Patrick Becker <galaxy@thinkbox.center>
@@ -22,6 +23,8 @@ tags:
   - zprofile
   - zlogin
   - zlogout
+  - application
+  - linux
 
 dependencies: {}
 

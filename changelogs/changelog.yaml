@@ -1,0 +1,16 @@
+---
+releases:
+  1.0.1:
+    changes:
+      minor_changes:
+        - Recognition of YAML files enabled.
+        - License badges added.
+    release_date: "2023-03-26"
+  1.0.2:
+    changes:
+      minor_changes:
+        - Removed unnecessary dependency.
+        - Added new galaxy tags.
+        - Resolved lint messages.
+        - Changelog added.
+    release_date: "2023-04-07"
