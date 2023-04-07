@@ -23,5 +23,7 @@ provisioner:
     group_vars:
       all:
         ansible_user: root
-verifier:
-  name: ansible
+lint: |
+  set -e
+  yamllint .
+  ansible-lint

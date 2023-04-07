@@ -5,30 +5,9 @@ on:
   pull_request:
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the codebase
-        uses: actions/checkout@v3
-
-      - name: Set up Python 3
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
-
-      - name: Install test dependencies
-        run: pip install yamllint ansible-lint
-
-      - name: Lint code
-        run: |
-          yamllint .
-          ansible-lint .
-
   molecule:
     name: Molecule - ${{ matrix.scenario.name }}
     runs-on: ubuntu-latest
-    needs: lint
     strategy:
       fail-fast: false
       matrix:
@@ -49,7 +28,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install test dependencies
-        run: pip install ansible molecule[docker] docker
+        run: pip install ansible yamllint ansible-lint molecule[docker] docker
 
       - name: Run Molecule tests
         run: molecule test
