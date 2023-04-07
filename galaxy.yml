@@ -22,6 +22,8 @@ tags:
   - zprofile
   - zlogin
   - zlogout
+  - application
+  - linux
 
 dependencies: {}
 
