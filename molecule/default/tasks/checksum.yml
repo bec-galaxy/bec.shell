@@ -1,6 +1,6 @@
 ---
 #
-# Extra file for the molecule verify step.
+# Included file for the molecule verify step - to compare checksums.
 #
 - name: Get stats of a zsh file
   ansible.builtin.stat:

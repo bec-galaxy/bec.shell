@@ -27,7 +27,7 @@
         fail_msg: Failed to set zsh as default shell for a user.
 
     - name: Check file paths
-      ansible.builtin.include_tasks: verify_checksum.yml
+      ansible.builtin.include_tasks: tasks/checksum.yml
       loop:
         - filename: /root/.zshrc  # Checks the resolution of $HOME too.
           checksum: 1920cfdbd67240c69a78172d912e41e47421b303
