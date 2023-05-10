@@ -14,3 +14,8 @@ releases:
         - Resolved lint messages.
         - Changelog added.
     release_date: "2023-04-07"
+  1.0.3:
+    changes:
+      minor_changes:
+        - Updated testing pipeline.
+    release_date: "2023-04-27"

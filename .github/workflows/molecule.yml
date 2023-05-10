@@ -4,48 +4,33 @@ name: Molecule
 "on":
   pull_request:
 
+env:
+  PY_COLORS: "1"
+  ANSIBLE_FORCE_COLOR: "1"
 jobs:
-  molecule:
-    name: Molecule - ${{ matrix.scenario.name }}
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        scenario:
-          [
-            { name: "Ubuntu Jammy Jellyfish", image: "ubuntu2204" },
-            { name: "Ubuntu Focal Fossa", image: "ubuntu2004" },
-            { name: "Debian Bullseye", image: "debian11" },
-            { name: "Debian Buster", image: "debian10" },
-          ]
     steps:
-      - name: Check out the codebase
+      - name: Checkout the codebase
         uses: actions/checkout@v3
 
-      - name: Set up Python 3
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
+      - name: Setup Lint
+        uses: bec-galaxy/setup-lint@v1
 
-      - name: Install test dependencies
-        run: pip install ansible yamllint ansible-lint molecule[docker] docker
+      - name: Run Lint tests
+        run: ansible-lint
+
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout the codebase
+        uses: actions/checkout@v3
+
+      - name: Setup Molecule
+        uses: bec-galaxy/setup-molecule@v1
 
       - name: Run Molecule tests
         run: molecule test
-        env:
-          PY_COLORS: "1"
-          ANSIBLE_FORCE_COLOR: "1"
-          MOLECULE_DISTRO: ${{ matrix.scenario.image }}
-
-  #
-  # Only allow merge requests to be merged if the pipeline succeeds.
-  #
-  output:
-    name: Print output
-    runs-on: ubuntu-latest
-    needs: molecule
-    steps:
-      - name: Print message
-        run: printf "Molecule tests for $PROJECT_NAME were successfully."
-        env:
-          PROJECT_NAME: "\e[1m${{ github.event.repository.name }}\e[0m"

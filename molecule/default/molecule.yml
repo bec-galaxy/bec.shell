@@ -3,27 +3,20 @@ dependency:
   name: galaxy
 driver:
   name: docker
-scenario:
-  name: default
-  test_sequence:
-    - lint
-    - destroy
-    - syntax
-    - create
-    - converge
-    - idempotence
-    - verify
-    - destroy
 platforms:
-  - name: instance
-    image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2204}-ansible
+  - name: ubuntu-20.04
+    image: ubuntu:20.04
+  - name: ubuntu-22.04
+    image: ubuntu:22.04
+  - name: debian-11
+    image: debian:11
+  - name: debian-10
+    image: debian:10
 provisioner:
   name: ansible
   inventory:
     group_vars:
       all:
         ansible_user: root
-lint: |
-  set -e
-  yamllint .
-  ansible-lint
+scenario:
+  name: default
