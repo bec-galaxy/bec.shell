@@ -4,6 +4,7 @@
   gather_facts: false
   tasks:
     - name: Get user shell
+      check_mode: true
       ansible.builtin.user:
         name: root
       register: user_info
