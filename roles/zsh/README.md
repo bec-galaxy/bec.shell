@@ -66,18 +66,18 @@ zsh_users_config:
 ```yaml
 zsh_system_config:
   - template: "zshrc.j2"
-    filename: "/etc/zshrc"
+    filename: "zshrc"
   - template: "zshenv.j2"
-    filename: "/etc/zshenv"
+    filename: "zshenv"
   - template: "zprofile.j2"
-    filename: "/etc/zprofile"
+    filename: "zprofile"
   - template: "zlogin.j2"
-    filename: "/etc/zlogin"
+    filename: "zlogin"
   - template: "zlogout.j2"
-    filename: "/etc/zlogout"
+    filename: "zlogout"
 ```
 
-<i>The target path is the `/etc/` directory.</i>
+<i>The target path is the `/etc/` directory, this can be changed in the variable `zsh_global`.</i>
 
 ## Examples
 
