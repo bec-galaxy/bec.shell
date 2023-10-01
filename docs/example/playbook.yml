@@ -1,0 +1,28 @@
+---
+- name: Zsh
+  hosts: localhost
+  connection: local
+  vars:
+    zsh_config_backup: false
+    zsh_config_overwrite: false  # Existing config files are preserved.
+
+    zsh_users:
+      - "root"
+      - "{{ ansible_user | default(ansible_env.USER) }}"
+
+    zsh_users_config:
+      - template: "zshrc.j2"
+        filename: ".zshrc"
+
+    zsh_dependencies:
+      - exa
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+
+    zsh_additional_lines: ""
+  roles:
+    - bec.shell.zsh
+  tasks:
+    - name: "Output message"
+      ansible.builtin.debug:
+        msg: "ZSH was installed."

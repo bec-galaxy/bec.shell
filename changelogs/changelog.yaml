@@ -19,3 +19,16 @@ releases:
       minor_changes:
         - Updated testing pipeline.
     release_date: "2023-04-27"
+  1.1.0:
+    changes:
+      minor_changes:
+        - Documentation updated.
+        - Refactoring.
+      major_changes:
+        - Specified users are checked for their existence before execution.
+      breaking_changes:
+        - Variable zsh_users_config and zsh_system_config uses relative paths, it is no longer necessary to specify a full path.
+          Naming of the property filepath has been changed to filename.
+      bugfixes:
+        - Fixed incorrect resolved $HOME variable. The user path is now determined via the user module.
+    release_date: "2023-10-01"

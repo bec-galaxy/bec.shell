@@ -1,0 +1,16 @@
+---
+- name: Create zsh system files
+  ansible.builtin.template:
+    src: "{{ config.template }}"
+    dest: "{{ (zsh_global, config.filename) | path_join }}"
+    mode: "{{ zsh_config_mode }}"
+    backup: "{{ zsh_config_backup }}"
+    force: "{{ zsh_config_overwrite }}"
+  loop: "{{ zsh_system_config }}"
+  loop_control:
+    loop_var: config
+  become: true
+  tags:
+    - zsh
+    - config
+    - system
