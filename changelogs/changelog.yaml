@@ -32,3 +32,8 @@ releases:
       bugfixes:
         - Fixed incorrect resolved $HOME variable. The user path is now determined via the user module.
     release_date: "2023-10-01"
+  1.1.1:
+    changes:
+      minor_changes:
+        - Updated incorrect path in documentation and unit test.
+    release_date: "2023-10-01"
