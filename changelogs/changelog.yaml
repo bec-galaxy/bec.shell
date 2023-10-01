@@ -27,7 +27,7 @@ releases:
       major_changes:
         - Specified users are checked for their existence before execution.
       breaking_changes:
-        - Variable zsh_users_config and zsh_system_config uses relative paths, it is no longer necessary to specify a full path.
+        - Variable zsh_users_config and zsh_system_config uses relative paths.
           Naming of the property filepath has been changed to filename.
       bugfixes:
         - Fixed incorrect resolved $HOME variable. The user path is now determined via the user module.
