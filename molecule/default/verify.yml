@@ -4,6 +4,7 @@
   gather_facts: false
   tasks:
     - name: Get user shell
+      check_mode: true
       ansible.builtin.user:
         name: root
       register: user_info
@@ -29,7 +30,7 @@
     - name: Check file paths
       ansible.builtin.include_tasks: tasks/checksum.yml
       loop:
-        - filename: /root/.zshrc  # Checks the resolution of $HOME too.
+        - filename: /root/.zshrc
           checksum: 1920cfdbd67240c69a78172d912e41e47421b303
         - filename: /root/.zshenv
           checksum: 4045278b9b11717f4f4094e56d9be87ff05a5965
@@ -38,6 +39,16 @@
         - filename: /root/.zlogin
           checksum: 56d13addb0ffd9962bc44393680b0a19b14a5839
         - filename: /root/.zlogout
+          checksum: 8fa1cd1a2fff12f861469b242d2ee897d475b27f
+        - filename: /home/test/.zshrc
+          checksum: 1920cfdbd67240c69a78172d912e41e47421b303
+        - filename: /home/test/.zshenv
+          checksum: 4045278b9b11717f4f4094e56d9be87ff05a5965
+        - filename: /home/test/.zprofile
+          checksum: 745ca5bd183374455bad022dc3390e62d3dbcd68
+        - filename: /home/test/.zlogin
+          checksum: 56d13addb0ffd9962bc44393680b0a19b14a5839
+        - filename: /home/test/.zlogout
           checksum: 8fa1cd1a2fff12f861469b242d2ee897d475b27f
         - filename: /etc/zshrc
           checksum: 1920cfdbd67240c69a78172d912e41e47421b303

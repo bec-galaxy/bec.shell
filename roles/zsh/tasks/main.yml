@@ -7,9 +7,9 @@
       - zsh_config_mode is defined
       - zsh_config_backup is defined
       - zsh_config_overwrite is defined
+      - zsh_users is defined
       - zsh_users_config is defined
       - zsh_system_config is defined
-      - zsh_users is defined
 
 - name: Ensure zsh with dependencies are installed
   ansible.builtin.apt:
@@ -21,26 +21,18 @@
     - zsh
     - dependencies
 
-- name: Create zsh system files
-  ansible.builtin.template:
-    src: "{{ item.template }}"
-    dest: "{{ item.filepath }}"
-    mode: "{{ zsh_config_mode }}"
-    backup: "{{ zsh_config_backup }}"
-    force: "{{ zsh_config_overwrite }}"
-  become: true
-  loop: "{{ zsh_system_config }}"
+- name: Distribute zsh system files
+  ansible.builtin.include_tasks: system.yml
   tags:
     - zsh
     - config
+    - system
 
-# Make sure that the default shell is zsh and the user settings are distributed.
-- name: Distribute zsh user settings
+# Make sure that the default shell is zsh and the user files are distributed.
+- name: Distribute zsh user files
   ansible.builtin.include_tasks: users.yml
+  loop: "{{ zsh_users }}"
   tags:
     - zsh
     - config
-    - shell
-  loop: "{{ zsh_users }}"
-  loop_control:
-    loop_var: zsh_user
+    - user

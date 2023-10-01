@@ -1,5 +1,6 @@
 ---
 zsh_dependencies: []
+zsh_global: "/etc/"
 zsh_executable: "/usr/bin/zsh"
 
 zsh_config_mode: "0644"

@@ -5,29 +5,33 @@
     zsh_config_backup: false
     zsh_config_overwrite: true
 
+    zsh_users:
+      - "{{ ansible_user }}"
+      - "test"
+
     zsh_users_config:
-      - template: "zshrc.j2"
-        filepath: "$HOME/.zshrc"
-      - template: "zshenv.j2"
-        filepath: "$HOME/.zshenv"
-      - template: "zprofile.j2"
-        filepath: "$HOME/.zprofile"
-      - template: "zlogin.j2"
-        filepath: "$HOME/.zlogin"
-      - template: "zlogout.j2"
-        filepath: "$HOME/.zlogout"
+      - template: "test_zshrc.j2"
+        filename: ".zshrc"
+      - template: "test_zshenv.j2"
+        filename: ".zshenv"
+      - template: "test_zprofile.j2"
+        filename: ".zprofile"
+      - template: "test_zlogin.j2"
+        filename: ".zlogin"
+      - template: "test_zlogout.j2"
+        filename: ".zlogout"
 
     zsh_system_config:
-      - template: "zshrc.j2"
-        filepath: "/etc/zshrc"
-      - template: "zshenv.j2"
-        filepath: "/etc/zshenv"
-      - template: "zprofile.j2"
-        filepath: "/etc/zprofile"
-      - template: "zlogin.j2"
-        filepath: "/etc/zlogin"
-      - template: "zlogout.j2"
-        filepath: "/etc/zlogout"
+      - template: "test_zshrc.j2"
+        filename: "/etc/zshrc"
+      - template: "test_zshenv.j2"
+        filename: "/etc/zshenv"
+      - template: "test_zprofile.j2"
+        filename: "/etc/zprofile"
+      - template: "test_zlogin.j2"
+        filename: "/etc/zlogin"
+      - template: "test_zlogout.j2"
+        filename: "/etc/zlogout"
 
     zsh_dependencies:
       - zsh-autosuggestions

@@ -24,6 +24,7 @@ Default variables in this playbook.
 | zsh_system_config    | A list of zsh files to be distributed globally.        | `[]`                 |
 | zsh_users            | A list of users who should get zsh as default shell.   | `{{ ansible_user }}` |
 | zsh_dependencies     | A list of additional packages to install.              | `[]`                 |
+| zsh_global           | Target for global zsh configuration files.             | `/etc/`              |
 | zsh_executable       | Path to the executable.                                | `/usr/bin/zsh`       |
 
 > **Molecule:** Unit test fails if a symbolic link like `/bin/zsh` is specified for `zsh_executable`.
@@ -33,48 +34,50 @@ The `zsh_users_config` property is a dictionary:
 ```yaml
 zsh_users_config:
   - template: "zshrc.j2"
-    filepath: "$HOME/.zshrc"
+    filename: ".zshrc"
 ```
 
 This basic example distributes a `.zshrc` for a user. Ansible looks for the `zshrc.j2` file in your `template` folder.
 
 ### Paths
 
-Here is a list of possible paths from the [zsh documentation (5.2 Files)](https://zsh.sourceforge.io/Doc/Release/Files.html#Files-1).
+Here is a list of possible filenames from the [zsh documentation (5.2 Files)](https://zsh.sourceforge.io/Doc/Release/Files.html#Files-1).
 
 #### Users
 
 ```yaml
 zsh_users_config:
   - template: "zshrc.j2"
-    filepath: "$HOME/.zshrc"
+    filename: ".zshrc"
   - template: "zshenv.j2"
-    filepath: "$HOME/.zshenv"
+    filename: ".zshenv"
   - template: "zprofile.j2"
-    filepath: "$HOME/.zprofile"
+    filename: ".zprofile"
   - template: "zlogin.j2"
-    filepath: "$HOME/.zlogin"
+    filename: ".zlogin"
   - template: "zlogout.j2"
-    filepath: "$HOME/.zlogout"
+    filename: ".zlogout"
 ```
 
-<i>The copy operation is performed in the context of the respective user.</i>
+<i>The target path is the HOME directory of the respective user.</i>
 
 #### System
 
 ```yaml
 zsh_system_config:
   - template: "zshrc.j2"
-    filepath: "/etc/zshrc"
+    filename: "/etc/zshrc"
   - template: "zshenv.j2"
-    filepath: "/etc/zshenv"
+    filename: "/etc/zshenv"
   - template: "zprofile.j2"
-    filepath: "/etc/zprofile"
+    filename: "/etc/zprofile"
   - template: "zlogin.j2"
-    filepath: "/etc/zlogin"
+    filename: "/etc/zlogin"
   - template: "zlogout.j2"
-    filepath: "/etc/zlogout"
+    filename: "/etc/zlogout"
 ```
+
+<i>The target path is the `/etc/` directory.</i>
 
 ## Examples
 
@@ -99,7 +102,7 @@ Install zsh and set it as default shell for the [ansible_user](https://docs.ansi
   roles:
     - bec.shell.zsh
   tasks:
-    ansible.builtin.debug:
+    - ansible.builtin.debug:
         msg: "ZSH has been installed and set as default for the user {{ ansible_user }}."
 ```
 
@@ -119,7 +122,7 @@ Install zsh and set it as default shell for a list of specified users.
   roles:
     - bec.shell.zsh
   tasks:
-    ansible.builtin.debug:
+    - ansible.builtin.debug:
         msg: "ZSH was installed and set as default for 2 users."
 ```
 
@@ -143,12 +146,12 @@ Distribute a custom `.zshrc` file for a list of users.
 
     zsh_users_config:
       - template: "zshrc.j2"
-        filepath: "$HOME/.zshrc"
+        filename: ".zshrc"
 
   roles:
     - bec.shell.zsh
   tasks:
-    ansible.builtin.debug:
+    - ansible.builtin.debug:
         msg: "ZSH was installed and a custom file was distributed."
 ```
 
@@ -186,14 +189,14 @@ Distribute a custom `.zshrc` file with a dependency.
 
     zsh_users_config:
       - template: "zshrc.j2"
-        filepath: "$HOME/.zshrc"
+        filename: ".zshrc"
 
     zsh_dependencies:
       - exa
   roles:
     - bec.shell.zsh
   tasks:
-    ansible.builtin.debug:
+    - ansible.builtin.debug:
         msg: "ZSH has been installed and exa is used to list files."
 ```
 
@@ -235,7 +238,7 @@ Distribute a custom `.zshrc` file with [autosuggestions](https://github.com/zsh-
 
     zsh_users_config:
       - template: "zshrc.j2"
-        filepath: "$HOME/.zshrc"
+        filename: ".zshrc"
 
     zsh_dependencies:
       - zsh-autosuggestions
@@ -243,7 +246,7 @@ Distribute a custom `.zshrc` file with [autosuggestions](https://github.com/zsh-
   roles:
     - bec.shell.zsh
   tasks:
-    ansible.builtin.debug:
+    - ansible.builtin.debug:
         msg: "ZSH was installed and additional functions were enabled."
 ```
 
@@ -284,7 +287,7 @@ Full example of a zsh shell.
 
     zsh_users_config:
       - template: "zshrc.j2"
-        filepath: "$HOME/.zshrc"
+        filename: ".zshrc"
 
     zsh_dependencies:
       - exa
@@ -295,7 +298,7 @@ Full example of a zsh shell.
   roles:
     - bec.shell.zsh
   tasks:
-    ansible.builtin.debug:
+    - ansible.builtin.debug:
         msg: "ZSH was installed."
 ```
 
@@ -331,7 +334,17 @@ Full example of a zsh shell.
   setopt INC_APPEND_HISTORY
   setopt AUTOCD
 
-  {% if zsh_additional_lines is defined %}
+  # set PATH so it includes user's private bin if it exists
+  if [ -d "$HOME/bin" ] ; then
+      PATH="$HOME/bin:$PATH"
+  fi
+
+  # set PATH so it includes user's private bin if it exists
+  if [ -d "$HOME/.local/bin" ] ; then
+      PATH="$HOME/.local/bin:$PATH"
+  fi
+
+  {% if zsh_additional_lines is defined and zsh_additional_lines | length %}
   #
   # Host specific additions
   #
@@ -345,6 +358,16 @@ Full example of a zsh shell.
 A preview of this configuration:
 ![zsh console](https://raw.githubusercontent.com/patbec/zsh-console-icons/master/zsh-console.svg)
 <sub>You can find the used [ANSI console colors here](https://github.com/patbec/zsh-console-icons#colors).</sub>
+
+#### Apply local
+
+This last example can be found in the [docs](../../docs/example) folder - in slightly modified form, you can apply it with the following local command:
+```shell
+ansible-galaxy collection install bec.shell --force
+ansible-playbook ./docs/example/playbook.yml --ask-become-pass
+```
+
+<sup>Note: Playbook in the docs folder <u>does not</u> overwrite any existing zsh configuration files.</sup>
 
 ---
 
