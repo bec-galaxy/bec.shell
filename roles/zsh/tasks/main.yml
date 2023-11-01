@@ -12,10 +12,10 @@
       - zsh_system_config is defined
 
 - name: Ensure zsh with dependencies are installed
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ ['zsh'] + zsh_dependencies }}"
     state: present
-    update_cache: true
+    update_cache: true  # Unknown arguments will be passed to the underlying package module.
   become: true
   tags:
     - zsh
