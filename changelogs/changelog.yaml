@@ -37,3 +37,8 @@ releases:
       minor_changes:
         - Updated incorrect path in documentation and unit test.
     release_date: "2023-10-01"
+  1.1.2:
+    changes:
+      minor_changes:
+        - Debian Bookworm and Ubuntu Lunar added to supported versions.
+    release_date: "2023-11-01"

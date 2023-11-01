@@ -4,14 +4,16 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: ubuntu-20.04
-    image: ubuntu:20.04
+  - name: ubuntu-23.04
+    image: ubuntu:23.04
   - name: ubuntu-22.04
     image: ubuntu:22.04
+  - name: ubuntu-20.04
+    image: ubuntu:20.04
+  - name: debian-12
+    image: debian:12
   - name: debian-11
     image: debian:11
-  - name: debian-10
-    image: debian:10
 provisioner:
   name: ansible
   inventory:
