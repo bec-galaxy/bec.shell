@@ -87,7 +87,7 @@ Here are a few examples of how this role can be used.
   3. [User defined config file](#user-defined-config-file)<br>Distribute a custom `.zshrc` file for a list of users.
   4. [Custom dependencies](#custom-dependencies)<br>Distribute a custom `.zshrc` file with a dependency.
   5. [Extra functions](#extra-functions)<br>Distribute a custom `.zshrc` file with `autosuggestions` and `syntax-highlighting` functions.
-  6. [Complete](#complete)<br>Full example of a zsh shell. <sup>[Sample Preview](#preview)</sup>
+  6. [Complete](#complete)<br>Full example of a zsh shell with a [screenshot](#preview).
 
 ### Basic
 
