@@ -1,13 +1,12 @@
-<img align="right" width="22%" src="https://raw.githubusercontent.com/patbec/zsh-console-icons/master/zsh-console-auto.svg" alt="zsh console icon"/>
-
 # Shell Role for Ansible
 
 This is a simple role to install and set up the **zsh-shell** on Linux.
 
 The following steps are supported:
-- Install zsh with custom packages
-- Set zsh as default shell for the specified users
-- Optional distribution of configuration files
+
+* Install zsh with custom packages
+* Set zsh as default shell for the specified users
+* Optional distribution of configuration files
 
 This role is kept simple, uses the standard package manager and contains minimal overhead. If you have any problems, feel free to create an issue.
 
@@ -88,17 +87,23 @@ Here are a few examples of how this role can be used.
   3. [User defined config file](#user-defined-config-file)<br>Distribute a custom `.zshrc` file for a list of users.
   4. [Custom dependencies](#custom-dependencies)<br>Distribute a custom `.zshrc` file with a dependency.
   5. [Extra functions](#extra-functions)<br>Distribute a custom `.zshrc` file with `autosuggestions` and `syntax-highlighting` functions.
-  6. [Complete](#complete)<br>Full example of a zsh shell.<sup>[Sample Preview](#preview)</sup>
+  6. [Complete](#complete)<br>Full example of a zsh shell. <sup>[Sample Preview](#preview)</sup>
 
 ### Basic
 
 Install zsh and set it as default shell for the [ansible_user](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#connection-variables).
-- Install the zsh package.
-- Set zsh as default shell for the `ansible_user`.
+
+* Install the zsh package.
+* Set zsh as default shell for the `ansible_user`.
+
+`main.yml` file in your **project folder**:
 
 ```yaml
 - name: zsh
   hosts: all
+  vars:
+    zsh_config_backup: false
+    zsh_config_overwrite: true
   roles:
     - bec.shell.zsh
   tasks:
@@ -109,13 +114,19 @@ Install zsh and set it as default shell for the [ansible_user](https://docs.ansi
 ### Multiple users
 
 Install zsh and set it as default shell for a list of specified users.
-- Install the zsh package.
-- Set zsh as default shell for the specified users.
+
+* Install the zsh package.
+* Set zsh as default shell for the specified users.
+
+`main.yml` file in your **project folder**:
 
 ```yaml
 - name: zsh
   hosts: all
   vars:
+    zsh_config_backup: false
+    zsh_config_overwrite: true
+
     zsh_users:
       - lorem
       - ipsum
@@ -129,9 +140,12 @@ Install zsh and set it as default shell for a list of specified users.
 ### User defined config file
 
 Distribute a custom `.zshrc` file for a list of users.
-- Install the zsh package.
-- Set zsh as default shell for the specified users.
-- Distribute a custom `.zshrc` for each user.
+
+* Install the zsh package.
+* Set zsh as default shell for the specified users.
+* Distribute a custom `.zshrc` for each user.
+
+`main.yml` file in your **project folder**:
 
 ```yaml
 - name: zsh
@@ -171,10 +185,13 @@ Distribute a custom `.zshrc` file for a list of users.
 ### Custom dependencies
 
 Distribute a custom `.zshrc` file with a dependency.
-- Install the zsh package.
-- Set zsh as default shell for the specified users.
-- Distribute a custom `.zshrc` for each user.
-- Install a dependency.
+
+* Install the zsh package.
+* Set zsh as default shell for the specified users.
+* Distribute a custom `.zshrc` for each user.
+* Install a dependency.
+
+`main.yml` file in your **project folder**:
 
 ```yaml
 - name: zsh
@@ -210,9 +227,8 @@ Distribute a custom `.zshrc` file with a dependency.
 {% endif %}
 
 alias ls='exa --group-directories-first'
-alias ll='exa --group-directories-first --all --long --binary --group --classify --grid'
-alias la='exa --group-directories-first --all --long --binary --group --header --links --inode --modified --blocks --time-style=long-iso --color-scale'
-alias lx='exa --group-directories-first --all --long --binary --group --header --links --inode --modified --blocks --time-style=long-iso --color-scale --extended'
+alias ll='exa --group-directories-first -a -l -b -g -F -G'
+alias lx='exa --group-directories-first -a -l -b -g -h -H -i -m -S --time-style=long-iso'
 ```
 
 > [exa](https://the.exa.website/) is an improved file lister with more features and better defaults. It uses colours to distinguish file types and metadata.
@@ -220,10 +236,13 @@ alias lx='exa --group-directories-first --all --long --binary --group --header -
 ### Extra functions
 
 Distribute a custom `.zshrc` file with [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#zsh-autosuggestions) and [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#zsh-syntax-highlighting-) functions.
-- Install the zsh package.
-- Set zsh as default shell for the specified users.
-- Distribute a custom `.zshrc` for each user.
-- Install [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#zsh-autosuggestions) and [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#zsh-syntax-highlighting-).
+
+* Install the zsh package.
+* Set zsh as default shell for the specified users.
+* Distribute a custom `.zshrc` for each user.
+* Install [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#zsh-autosuggestions) and [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#zsh-syntax-highlighting-).
+
+`main.yml` file in your **project folder**:
 
 ```yaml
 - name: zsh
@@ -261,18 +280,21 @@ Distribute a custom `.zshrc` file with [autosuggestions](https://github.com/zsh-
 
 autoload colors && colors
 
-source  /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ```
 
 ### Complete
 
 Full example of a zsh shell.
-- Install the zsh package.
-- Set zsh as default shell for the specified users.
-- Distribute a custom `.zshrc` for each user.
-- Install [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#zsh-autosuggestions), [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#zsh-syntax-highlighting-) and [exa](https://github.com/ogham/exa).
-- Set `history`, `color` and `cd` settings.
+
+* Install the zsh package.
+* Set zsh as default shell for the specified users.
+* Distribute a custom `.zshrc` for each user.
+* Install [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#zsh-autosuggestions), [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#zsh-syntax-highlighting-) and [exa](https://github.com/ogham/exa).
+* Set `history`, `color` and `cd` settings.
+
+`main.yml` file in your **project folder**:
 
 ```yaml
 - name: zsh
@@ -304,54 +326,49 @@ Full example of a zsh shell.
 
 `zshrc.j2` file in your **templates folder**:
 
-<details>
-  <summary><b>Click here to see the content</b></summary>
+```jinja
+{% if zsh_config_overwrite is true %}
+#
+# {{ ansible_managed }}
+#
+{% endif %}
 
-  ```jinja
-  {% if zsh_config_overwrite is true %}
-  #
-  # {{ ansible_managed }}
-  #
-  {% endif %}
+autoload colors && colors
 
-  autoload colors && colors
+PROMPT="%{%F{40}%}%n@%m"
+PROMPT+="%{$fg[cyan]%} %c %(?:%{$fg[cyan]%}%# :%{$fg[red]%}%# )%{$reset_color%}"
 
-  PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-  PROMPT+=" %{$fg[cyan]%}%c%{$reset_color%} "
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-  source  /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+alias ls='exa --group-directories-first'
+alias ll='exa --group-directories-first -a -l -b -g -F -G'
+alias lx='exa --group-directories-first -a -l -b -g -h -H -i -m -S --time-style=long-iso'
 
-  alias ls='exa --group-directories-first'
-  alias ll='exa --group-directories-first --all --long --binary --group --classify --grid'
-  alias la='exa --group-directories-first --all --long --binary --group --header --links --inode --modified --blocks --time-style=long-iso --color-scale'
-  alias lx='exa --group-directories-first --all --long --binary --group --header --links --inode --modified --blocks --time-style=long-iso --color-scale --extended'
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
 
-  HISTFILE="$HOME/.zsh_history"
-  HISTSIZE=50000
-  SAVEHIST=50000
+setopt INC_APPEND_HISTORY
+setopt AUTOCD
 
-  setopt INC_APPEND_HISTORY
-  setopt AUTOCD
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
 
-  # set PATH so it includes user's private bin if it exists
-  if [ -d "$HOME/bin" ] ; then
-      PATH="$HOME/bin:$PATH"
-  fi
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
-  # set PATH so it includes user's private bin if it exists
-  if [ -d "$HOME/.local/bin" ] ; then
-      PATH="$HOME/.local/bin:$PATH"
-  fi
-
-  {% if zsh_additional_lines is defined and zsh_additional_lines | length %}
-  #
-  # Host specific additions
-  #
-  {{ zsh_additional_lines }}
-  {% endif %}
-  ```
-</details>
+{% if zsh_additional_lines is defined and zsh_additional_lines | length %}
+#
+# Host specific additions
+#
+{{ zsh_additional_lines }}
+{% endif %}
+```
 
 #### Preview
 
@@ -359,16 +376,12 @@ A preview of this configuration:
 ![zsh console](https://raw.githubusercontent.com/patbec/zsh-console-icons/master/zsh-console.svg)
 <sub>You can find the used [ANSI console colors here](https://github.com/patbec/zsh-console-icons#colors).</sub>
 
-#### Apply local
+### Apply local
 
-This last example can be found in the [docs](../../docs/example) folder - in slightly modified form, you can apply it with the following local command:
+This last example can be found in the [docs](https://github.com/bec-galaxy/ansible-collection-shell/tree/main/docs/example) folder - in slightly modified form, you can apply it with the following local command:
 ```shell
 ansible-galaxy collection install bec.shell --force
 ansible-playbook ./docs/example/playbook.yml --ask-become-pass
 ```
 
 <sup>Note: Playbook in the docs folder <u>does not</u> overwrite any existing zsh configuration files.</sup>
-
----
-
-&uarr; [Back to top](#)
