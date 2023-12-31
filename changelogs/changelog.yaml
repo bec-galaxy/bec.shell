@@ -42,3 +42,8 @@ releases:
       minor_changes:
         - Debian Bookworm and Ubuntu Lunar added to supported versions.
     release_date: "2023-11-01"
+  1.1.3:
+    changes:
+      minor_changes:
+        - Documentation and examples updated.
+    release_date: "2023-12-31"

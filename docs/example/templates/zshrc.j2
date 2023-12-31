@@ -1,17 +1,16 @@
 autoload colors && colors
 
-PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-PROMPT+=" %{$fg[cyan]%}%c%{$reset_color%} "
+{% raw %}
+PROMPT="%{%F{40}%}%n@%m"
+PROMPT+="%{$fg[cyan]%} %c %(?:%{$fg[cyan]%}%# :%{$fg[red]%}%# )%{$reset_color%}"
+{% endraw %}
 
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias ls='exa --group-directories-first'
-alias ll='exa --group-directories-first --all --long --binary --group --classify --grid'
-alias la='exa --group-directories-first --all --long --binary --group --header --links --inode --modified --blocks
---time-style=long-iso --color-scale'
-alias lx='exa --group-directories-first --all --long --binary --group --header --links --inode --modified --blocks
---time-style=long-iso --color-scale --extended'
+alias ll='exa --group-directories-first -a -l -b -g -F -G'
+alias lx='exa --group-directories-first -a -l -b -g -h -H -i -m -S --time-style=long-iso'
 
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
@@ -22,12 +21,12 @@ setopt AUTOCD
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-PATH="$HOME/bin:$PATH"
+    PATH="$HOME/bin:$PATH"
 fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
-PATH="$HOME/.local/bin:$PATH"
+    PATH="$HOME/.local/bin:$PATH"
 fi
 
 {% if zsh_additional_lines is defined and zsh_additional_lines | length %}
