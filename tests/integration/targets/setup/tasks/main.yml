@@ -1,0 +1,7 @@
+---
+- name: Ensure that the additional test user exists
+  ansible.builtin.user:
+    name: "test"
+    state: "present"
+    comment: "Non administrator account for testing."
+  become: true

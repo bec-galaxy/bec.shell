@@ -1,8 +1,10 @@
 ---
+- name: Test
+  ansible.builtin.debug:
+    msg: Hello World
+
 - name: Verify
-  hosts: all
-  gather_facts: false
-  tasks:
+  block:
     - name: Get user shell
       check_mode: true
       ansible.builtin.user:
@@ -28,7 +30,7 @@
         fail_msg: Failed to set zsh as default shell for a user.
 
     - name: Check file paths
-      ansible.builtin.include_tasks: tasks/checksum.yml
+      ansible.builtin.include_tasks: checksum.yml
       loop:
         - filename: /root/.zshrc
           checksum: 1920cfdbd67240c69a78172d912e41e47421b303

@@ -1,0 +1,21 @@
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Changelog cache files
+changelogs/.plugin-cache.yaml
+
+# ansible-test ignores
+tests/integration/inventory*
+tests/integration/targets/domain_controller/.vagrant
+tests/integration/targets/membership/.vagrant
+tests/output/
