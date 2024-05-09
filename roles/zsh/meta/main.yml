@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Patrick Becker <galaxy@thinkbox.center>
+  author: Patrick Becker
   description: Installs and configures zsh for one or more users on Linux.
   license: MIT
 

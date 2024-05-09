@@ -47,3 +47,8 @@ releases:
       minor_changes:
         - Documentation and examples updated.
     release_date: "2023-12-31"
+  1.1.4:
+    changes:
+      minor_changes:
+        - Documentation and test framework updated.
+    release_date: "2024-05-09"

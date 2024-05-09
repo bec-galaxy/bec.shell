@@ -2,10 +2,10 @@
 namespace: bec
 name: shell
 
-version: 1.1.3
+version: 1.1.4
 readme: README.md
 authors:
-  - Patrick Becker <galaxy@thinkbox.center>
+  - Patrick Becker
 
 description: A simple collection to install and set up a shell on Linux.
 
@@ -28,11 +28,10 @@ tags:
 
 dependencies: {}
 
-repository: https://github.com/bec-galaxy/ansible-collection-shell
-documentation: https://github.com/bec-galaxy/ansible-collection-shell
+repository: https://github.com/bec-galaxy/bec.shell
+documentation: https://github.com/bec-galaxy/bec.shell
 homepage: https://github.com/bec-galaxy
-issues: https://github.com/bec-galaxy/ansible-collection-shell/issues
+issues: https://github.com/bec-galaxy/bec.shell/issues
 
 build_ignore:
-  - "molecule"
   - "*.tar.gz"

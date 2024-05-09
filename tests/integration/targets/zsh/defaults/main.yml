@@ -1,0 +1,35 @@
+---
+zsh_config_backup: false
+zsh_config_overwrite: true
+
+zsh_users:
+  - "{{ ansible_user }}"
+  - "test"
+
+zsh_users_config:
+  - template: "test_zshrc.j2"
+    filename: ".zshrc"
+  - template: "test_zshenv.j2"
+    filename: ".zshenv"
+  - template: "test_zprofile.j2"
+    filename: ".zprofile"
+  - template: "test_zlogin.j2"
+    filename: ".zlogin"
+  - template: "test_zlogout.j2"
+    filename: ".zlogout"
+
+zsh_system_config:
+  - template: "test_zshrc.j2"
+    filename: "zshrc"
+  - template: "test_zshenv.j2"
+    filename: "zshenv"
+  - template: "test_zprofile.j2"
+    filename: "zprofile"
+  - template: "test_zlogin.j2"
+    filename: "zlogin"
+  - template: "test_zlogout.j2"
+    filename: "zlogout"
+
+zsh_dependencies:
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
